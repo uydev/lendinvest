@@ -1,0 +1,1 @@
+0 0 1 * *  /usr/bin/pgrep -f /path/to/cron.sh > /dev/null 2> /dev/null || /path/to/cron.sh

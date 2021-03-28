@@ -1,0 +1,16 @@
+{
+    "require": {
+        "phpunit/phpunit": "^8.1",
+        "ext-calendar": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lendinvest\\Tests\\": "tests/"
+        }
+    }
+}
