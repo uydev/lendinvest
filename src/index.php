@@ -2,8 +2,8 @@
 /**
  * Just an extra file that was used for further testing.
  * Will need to uncomment lines in MakeInvestment.php on
- * Line 54
- * Lines 81 - 84
+ * Line 55
+ * Lines 84 - 87
  */
 namespace Lendinvest;
 require_once __DIR__ . '/../vendor/autoload.php';

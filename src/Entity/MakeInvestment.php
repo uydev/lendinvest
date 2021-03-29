@@ -57,8 +57,10 @@ final class MakeInvestment implements MakeInvestmentInterface
         if ($this->date->format('m-d-Y') <= $this->tranche->getLoan()->getEndDate()->format('m-d-Y')
             && ($this->date->format('m-d-Y') >= $this->tranche->getLoan()->getStartDate()->format('m-d-Y'))) {
 
+            //Investment amount must be less than or equal the maximum available on the tranche
             if ($this->amount <= $this->tranche->getMaximumAvailable()) {
 
+                //Investment amount must exist in the virtual wallet
                 if ($this->amount <= $this->investor->getVirtualWallet()) {
 
                     $investment = new Investments($this->amount, $this->investor, $this->tranche, $this->date);
@@ -78,7 +80,6 @@ final class MakeInvestment implements MakeInvestmentInterface
 
         } else {
             throw new Exception("\nThis tranche is no longer accepting investments");
-
         }
 //        }
 //        catch (Exception $e) {
