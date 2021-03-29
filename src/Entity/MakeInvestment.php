@@ -1,4 +1,5 @@
 <?php
+
 namespace Lendinvest\Entity;
 
 use DateTime;
@@ -52,11 +53,11 @@ final class MakeInvestment implements MakeInvestmentInterface
     public function makeInvestment()
     {
 //        try {
-        if ($this->tranche->getTrancheStatus() == 'open' && ($this->investor->getVirtualWallet() >= $this->amount)
-            && ($this->amount <= $this->tranche->getMaximumAvailable())) {
+        //Check that the tranche is open
+        if ($this->date->format('m-d-Y') <= $this->tranche->getLoan()->getEndDate()->format('m-d-Y')
+            && ($this->date->format('m-d-Y') >= $this->tranche->getLoan()->getStartDate()->format('m-d-Y'))) {
 
-            if ($this->date->format('m-d-Y') <= $this->tranche->getLoan()->getEndDate()->format('m-d-Y')
-                && ($this->date->format('m-d-Y') >= $this->tranche->getLoan()->getStartDate()->format('m-d-Y'))) {
+            if ($this->amount <= $this->tranche->getMaximumAvailable()) {
 
                 if ($this->amount <= $this->investor->getVirtualWallet()) {
 
@@ -64,19 +65,20 @@ final class MakeInvestment implements MakeInvestmentInterface
                     $this->investor->setInvestments($investment);
                     $this->tranche->setInvestments($investment);
 
-                    // We deduct from the maximum available in the tranch since an investor has invested
+                    // We deduct from the maximum available in the tranche since an investor has invested
                     $this->tranche->setMaximumAvailable($this->tranche->getMaximumAvailable() - $this->amount);
 
                 } else {
-                    throw new Exception("\nThere is not enough balance for the investment amount specified", 100);
+                    throw new Exception("\nThere is not enough balance for the investment amount specified");
                 }
 
             } else {
-                throw new Exception("\nThis tranche is no longer accepting investments");
+                throw new Exception("\nThis exceeds the amount available on this tranche");
             }
 
         } else {
-            throw new Exception("\nThis exceeds the amount available on this tranche", 101);
+            throw new Exception("\nThis tranche is no longer accepting investments");
+
         }
 //        }
 //        catch (Exception $e) {
